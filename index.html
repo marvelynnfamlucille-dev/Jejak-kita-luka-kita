@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelompok 6</title>
+  <meta name="description" content="SAS kolaborasi">
+  <link rel="icon" href="./img/icon.png">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #d89b37eb;
+      --accent: #ffffffc0;
+      --dark: #0A0A0A;
+      --light: #f8f9fa;
+      --smooth: cubic-bezier(.4,0,.2,1);
+    }
+
+    body {
+      background: var(--light);
+      color: var(--dark);
+      font-family: "Poppins", sans-serif;
+      transition: background .4s var(--smooth), color .4s var(--smooth);
+    }
+
+    body.dark { background: #e3b81d; color: #e1decb; }
+
+    /* PRELOADER */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: #fff;
+      font-size: 3rem;
+      font-family: "Bebas Neue";
+      animation: fadeOut 1.3s forwards;
+      animation-delay: .8s;
+    }
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+    /* NAVBAR */
+    .navbar {
+      padding: 1rem 0;
+      background: rgba(255, 174, 0, 0.85);
+      backdrop-filter: blur(5px);
+      transition: .4s var(--smooth);
+    }
+    .navbar.scrolled { padding: .6rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.18); }
+    .nav-link { color: var(--accent) !important; font-weight: 500; margin: 0 6px; transition: var(--smooth); }
+    .nav-link:hover { color: #fff !important; transform: translateY(-2px); }
+    .navbar-logo { height: 55px; width: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25)); }
+
+    /* HERO SECTION */
+    .hero-section {
+  background: url('./Untitled (1920 x 845 px) (2).gif') center/cover no-repeat;
+  height: 95vh;
+  display: flex;
+  align-items: flex-end;       /* push content toward bottom */
+  justify-content: center;
+  position: relative;
+  color: white;
+  text-align: center;
+  padding-bottom: 100px;       /* space from bottom */
+}
+    .hero-content {
+      z-index: 2;
+      max-width: 700px;
+    }
+    .btn-primary {
+      background: var(--primary);
+      border: none;
+      padding: .75rem 1.5rem;
+      border-radius: 14px;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(147, 111, 11, 0.35);
+      transition: var(--smooth);
+    }
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      background: #ffea00 !important;
+      box-shadow: 0 14px 28px rgba(104, 84, 17, 0.5);
+    }
+
+    /* LATAR BELAKANG */
+    .latar-section {
+      background: var(--light); /* separate background */
+      color: #000;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .latar-section h2 {
+      color: #d89b37;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      margin-bottom: 1rem;
+    }
+
+    /* ANGGOTA + KONSULTASI */
+    .anggota-section {
+      background: #f8f9fa;
+      color: #000;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .anggota-section h2 {
+      color: #d89b37;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      margin-bottom: 2rem;
+    }
+
+    .card-hover {
+      border-radius: 18px;
+      overflow: hidden;
+      transition: .4s var(--smooth);
+      background: white;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      position: relative;
+    }
+    body.dark .card-hover { background: #1e293b; }
+    .card-hover img { width: 100%; height: 250px; object-fit: cover; transition: .4s var(--smooth); }
+    .card-hover:hover { transform: translateY(-10px); box-shadow: 0 14px 32px rgba(0,0,0,0.25); }
+    .card-hover:hover img { transform: scale(1.12); }
+    .overlay {
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:rgba(0,0,0,0.6);
+      color:white;
+      font-size:1.4rem;
+      opacity:0;
+      transition: var(--smooth);
+    }
+    .card-hover:hover .overlay { opacity:1; }
+
+    /* MOVING IMAGES */
+    .moving-images-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      height: 180px;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .moving-images-container {
+      display: flex;
+      gap: 30px;
+      animation: slideImages 12s linear infinite;
+    }
+    .moving-images-container img {
+      width: 250px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    .moving-images-container img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    }
+    @keyframes slideImages {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(-20px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* FOOTER */
+    footer {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      padding: 2.5rem 0;
+      box-shadow: 0 -6px 25px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    /* BACK TO TOP */
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.4rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--smooth);
+      box-shadow: 0 6px 20px rgba(0,0,0,.25);
+      z-index: 1000;
+    }
+    #backToTop.show { opacity: 1; visibility: visible; }
+    #backToTop:hover { transform: scale(1.15); background: #e69112; }
+  </style>
+</head>
+
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">Jejak Kita, Luka Kita</div>
+
+  <!-- BACK TO TOP -->
+  <button id="backToTop"><i class="bi bi-arrow-up"></i></button>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light fw-bold fs-3 d-flex align-items-center gap-2" href="#">
+        <img src="./Serviam.gif" class="navbar-logo">Kelompok 6
+      </a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="nav">
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link active" href="./index.html">Home</a>
+          <a class="nav-link active" href="./data dan fakta.html">Data</a>
+          <div class="dropdown">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="hasilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Pembahasan
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="hasilDropdown">
+                <li><a class="dropdown-item" href="./Sejarah.html">Kilas Balik Eksploitasi</a></li>
+                <li><a class="dropdown-item" href="./Agama.html">Dampak & Hikmah</a></li>
+                <li><a class="dropdown-item" href="./PPKN.html">Keberlanjutan & Keadilan</a></li>
+                <li><a class="dropdown-item" href="./PKWU.html">Grape Soap</a></li>
+              </ul>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <a href="#anggota" class="btn btn-primary btn-lg">Tentang Kami</a>
+    </div>
+  </header>
+
+  <!-- LATAR BELAKANG -->
+  <section class="latar-section">
+    <div class="container text-center">
+      <h2 data-aos="fade-up">Latar Belakang</h2>
+      <p data-aos="fade-up">
+        Jejak Kita, Luka Alam: Menahan Laju Eksploitasi SDA dengan Hidup Berkelanjutan menggambarkan bahwa setiap tindakan manusia terhadap alam selalu meninggalkan jejak yang dapat berubah menjadi “luka” berupa kerusakan hutan, pencemaran, dan terganggunya ekosistem. Namun, judul ini juga menegaskan bahwa kerusakan dapat dihentikan jika manusia memilih hidup yang lebih berkelanjutan. Kita yang membuat jejak, dan kita pula yang dapat memulihkan bumi.
+      </p>
+    </div>
+  </section>
+
+  <!-- ANGGOTA + KONSULTASI -->
+  <section id="anggota" class="anggota-section">
+    <div class="container">
+      <h2 data-aos="fade-up">Anggota</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-12 col-md-3" data-aos="zoom-in">
+          <div class="card-hover"><img src="./marvel.jpg"><div class="overlay">Xaverius Marvelino Gunawan X1/30</div></div>
+          <h5 class="text-center mt-2">Anggota 1</h5>
+        </div>
+        <div class="col-12 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card-hover"><img src="./kennards.jpg"><div class="overlay">Kennard Desmond Sugianto X1/19</div></div>
+          <h5 class="text-center mt-2">Anggota 2</h5>
+        </div>
+        <div class="col-12 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card-hover"><img src="./marvelynn.jpg"><div class="overlay">Marvelynn Fam Lucille X1/22</div></div>
+          <h5 class="text-center mt-2">Anggota 3</h5>
+        </div>
+      </div>
+
+      <h2 class="mt-5" data-aos="fade-up">Konsultasi</h2>
+      <div class="moving-images-section my-4">
+        <div class="moving-images-container">
+          <img src="./konsul 1.jpg" alt="Image 1">
+          <img src="./konsul 2.jpg" alt="Image 2">
+          <img src="./konsul 3.jpg" alt="Image 3">
+          <img src="./konsul 4.jpg" alt="Image 4">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>"Menjadi Pemimpin yang Peduli, Kreatif, dan Berwawasan Global."</p>
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-twitter"></i></a>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({ duration: 900, easing: "ease-out" });
+
+    // NAVBAR shrink
+    window.addEventListener("scroll", () => {
+      const nav = document.querySelector(".navbar");
+      nav.classList.toggle("scrolled", window.scrollY > 80);
+    });
+
+    // Back to top
+    const back = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) back.classList.add("show");
+      else back.classList.remove("show");
+    });
+    back.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  </script>
+
+</body>
+</html>

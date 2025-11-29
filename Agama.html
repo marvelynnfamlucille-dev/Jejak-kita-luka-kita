@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hasil</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons & Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary: #0c9742;
+      --accent: #11a453;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --dark: #0c0c0c;
+      --shadow: 0 8px 30px rgba(2,6,23,0.08);
+      --radius: 14px;
+      --transition: 280ms cubic-bezier(.2,.9,.2,1);
+    }
+
+    html,body{height:100%; margin:0; background:var(--bg); font-family:"Poppins",system-ui,Arial; color:var(--dark); -webkit-font-smoothing:antialiased;}
+    a{color:inherit; text-decoration:none;}
+
+    /* Navbar */
+    .navbar{
+      background: linear-gradient(135deg,hsla(120, 51%, 36%, 0.783),#23592f);
+      padding: .9rem 1rem;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.12);
+      transition: box-shadow var(--transition);
+    }
+    .navbar .navbar-brand{ color:#2cc743; font-weight:700; display:flex; gap:.6rem; align-items:center; }
+    .navbar .navbar-brand img{ height:48px; border-radius:8px; }
+    .nav-link{ color: rgba(24, 178, 31, 0.98) !important; font-weight:500; margin-left:.5rem; margin-right:.25rem; transition: transform var(--transition); }
+    .nav-link:hover{ transform:translateY(-3px); color:#fff !important; }
+    .dropdown .btn{ margin-left:.5rem; }
+
+    /* Hero */
+    .hero {
+      height: 68vh;
+      min-height: 400px;
+      display:flex;
+      align-items:center;
+      background-image: url('./Untitled (1920 x 845 px) (7).png');
+      background-size: cover;
+      background-position: center;
+      position:relative;
+      color: #fff;
+    }
+    /* soft overlay for smoother look */
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      pointer-events:none;
+    }
+    .hero .hero-inner{ position:relative; z-index:2; padding: clamp(1.25rem,4vw,3rem); max-width:1160px; margin:0 auto; }
+    .hero h1{ font-family:"Poppins",sans-serif; font-weight:700; font-size: clamp(1.6rem,3.8vw,2.6rem); margin-bottom:.25rem; letter-spacing: .6px; }
+    .hero p.lead{ font-size:1rem; line-height:1.6; max-width:80ch; opacity:.96; }
+
+    /* Section headings */
+    .section-title { font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:1.2px; display:block; margin-bottom: .75rem; }
+    .section-sub { color:var(--muted); margin-bottom:1.4rem;}
+
+    /* Content cards & image styles */
+    .content-card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .img-cover{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .readable-text{ font-size:1.03rem; line-height:1.7; color:var(--dark); }
+
+    .image-box{ width:100%; height:100%; border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(2,6,23,0.06); }
+
+    /* flip cards row */
+    .card-container{ display:flex; gap:28px; justify-content:center; flex-wrap:wrap; margin:1.25rem 0 2rem; }
+    .flip-card { width:260px; height:260px; perspective:1000px; }
+    .flip-card-inner{ position:relative; width:100%; height:100%; transition: transform .75s; transform-style: preserve-3d; }
+    .flip-card:hover .flip-card-inner, .flip-card.active .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back { position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:18px; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .flip-card-front{ background:#fff; border:1px solid #e6e6e6; box-shadow:0 8px 22px rgba(2,6,23,0.04); }
+    .flip-card-back{ background:#e6f7ff; transform: rotateY(180deg); border:1px solid #16893e; }
+
+    /* carousel person cards */
+    .person-card{ width:320px; padding:28px; border-radius:16px; background:#e9e9e9; margin:0 auto; transition:transform .4s, opacity .4s; }
+    .people-carousel .carousel-item:not(.active) .person-card{ transform:scale(.87); opacity:.55; }
+    .people-carousel .carousel-item.active .person-card{ transform:scale(1.05); opacity:1; }
+
+    /* services */
+    .service-circle{ width:72px; height:72px; border-radius:50%; background:#c24a46; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; overflow:hidden; }
+    .service-circle img{ width:54px; height:54px; object-fit:contain; }
+
+    /* footer */
+    footer.site-footer{ background: #0c0c0c; color:#e6e6e6; padding:2.25rem 0; }
+    .social-icons a{ color: #d1d1d1; margin:0 .5rem; font-size:1.25rem; transition: transform .2s, color .2s; }
+    .social-icons a:hover{ color:var(--accent); transform:translateY(-3px); }
+
+    /* responsive tweaks */
+    @media (max-width: 991px){
+      .card-img-horizontal { width:100%; height:auto; }
+      .card{ flex-direction:column; gap:16px; }
+      .hero{ height: auto; padding:4rem 0; min-height:360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./Serviam.gif" alt="logo">
+        Kelompok 6
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="nav">
+        <div class="navbar-nav ms-auto align-items-center">
+          <a class="nav-link active" href="./index.html">Home</a>
+          <div class="collapse navbar-collapse" id="nav">
+        <div class="navbar-nav ms-auto">
+        <a class="nav-link active" href="./data dan fakta.html">Data</a>
+
+          <div class="dropdown">
+           <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="hasilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pembahasan
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="hasilDropdown">
+    <li><a class="dropdown-item" href="./Sejarah.html">Kilas Balik Eksploitasi</a></li>
+    <li><a class="dropdown-item" href="./Agama.html">Dampak & Hikmah</a></li>
+    <li><a class="dropdown-item" href="./PPKN.html">Keberlanjutan & Keadilan</a></li>
+    <li><a class="dropdown-item" href="./PKWU.html">Grape Soap</a></li>
+  </ul>
+</li>
+          </div>
+
+         
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" role="banner" aria-label="Hero">
+    <div class="hero-inner container text-center">
+      <!-- hero intentionally left visually simple as in original; text is used in later sections -->
+    </div>
+  </header>
+
+  <main class="py-5">
+    <div class="container px-4">
+
+      <!-- Latar belakang -->
+      <h2 class="text-center fw-bold" style="color: green;">Latar belakang</h2>
+      <p class="lead text-center readable-text mb-4">
+        Sumber daya alam (SDA) merupakan aset penting bagi kelangsungan hidup manusia, namun pola eksploitasi yang tidak terkendali telah menimbulkan berbagai kerusakan lingkungan seperti deforestasi, pencemaran, dan perubahan iklim. Kondisi ini menuntut masyarakat untuk memiliki sikap kritis dalam menilai setiap bentuk pemanfaatan SDA agar tidak hanya berorientasi pada keuntungan jangka pendek, tetapi juga mempertimbangkan keberlanjutan bumi. Dalam konteks ini, nilai-nilai agama berperan penting sebagai landasan moral yang menekankan tanggung jawab manusia sebagai penjaga alam, sehingga perilaku dalam mengelola lingkungan didasari oleh rasa amanah, syukur, dan kepedulian. Integrasi antara sikap kritis dan nilai-nilai agama diharapkan mampu mendorong terciptanya praktik pengelolaan lingkungan yang bijaksana dan berkelanjutan demi kesejahteraan generasi sekarang dan masa depan.
+      </p>
+
+      <!-- Two-column feature block -->
+      <div class="row gy-5 align-items-center my-4">
+        <div class="col-lg-6">
+          <div class="image-box">
+            <img src="./pengertian-masyarakat.jpg" alt="Gambar" class="img-cover" />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="content-card p-4 readable-card">
+            <h3 style="font-weight:600;">Pentingnya Sikap Kritis di Era Informasi</h3>
+            <p style="margin-top:10px;" class="readable-text">
+              Di era media massa dan media sosial, masyarakat menerima arus informasi yang sangat cepat dan beragam. Banyak pesan yang disampaikan melalui berita, iklan, atau konten digital dapat membentuk cara pandang kita terhadap alam, pembangunan, dan kebutuhan ekonomi. Tanpa sikap kritis, kita mudah menerima informasi tanpa mempertanyakan dampaknya. Karena itu, kemampuan menganalisis, membandingkan, serta menilai kebenaran informasi menjadi keahlian yang sangat penting bagi masyarakat modern.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next pair -->
+      <div class="row gy-5 align-items-center my-4">
+        <div class="col-lg-6 order-lg-2">
+          <div class="image-box">
+            <img src="./IndoMedia_resized-1858572031-1661401256155.webp" alt="Gambar" class="img-cover" />
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="content-card p-4 readable-card">
+            <h3 style="font-weight:600;">Media, Ideologi, dan Normalisasi Eksploitasi SDA</h3>
+            <p style="margin-top:10px;" class="readable-text">
+              Eksploitasi sumber daya alam di Indonesia sering kali dibungkus dalam narasi “pembangunan”, “peningkatan investasi”, atau “kemajuan teknologi”. Penebangan hutan berskala besar, tambang nikel untuk baterai kendaraan listrik, sampai perluasan perkebunan sering dipromosikan sebagai tanda modernisasi. Media dan gaya hidup konsumtif ikut memperkuat gambaran ini sehingga kerusakan alam tampak seperti pengorbanan yang wajar.
+              Padahal di balik narasi tersebut terdapat masalah besar: hilangnya hutan, pencemaran sungai, konflik lahan, dan rusaknya ekosistem. Inilah alasan mengapa sikap kritis sangat dibutuhkan agar masyarakat mampu melihat mana informasi yang objektif dan mana yang menutupi realitas eksploitasi.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Another pair -->
+      <div class="row gy-5 align-items-center my-4">
+        <div class="col-lg-6">
+          <div class="image-box">
+            <img src="./ai.jpg" alt="Gambar" class="img-cover" />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="content-card p-4 readable-card">
+            <h3 style="font-weight:600;">Gaya Hidup Modern dan Tekanan terhadap Alam</h3>
+            <p style="margin-top:10px;" class="readable-text">
+              Perkembangan gaya hidup yang mengutamakan kecepatan, kenyamanan, dan konsumsi barang-barang baru juga menambah beban bagi bumi. Permintaan nikel meningkat karena kebutuhan baterai EV; konsumsi minyak sawit terus naik; dan kebutuhan energi membuat hutan dan tambang terus diperluas. Tanpa kesadaran kritis, masyarakat hanya menjadi konsumen tanpa menyadari bahwa pilihan gaya hidup sehari-hari berkontribusi pada percepatan eksploitasi SDA.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Integration section with accordion -->
+      <section class="py-4">
+        <h2 class="text-center fw-bold" style="color: green;">Integrasi Nilai Agama dan Kesadaran Ekologis</h2>
+
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true">
+                Merawat Lingkungan sebagai Tanggung Jawab Moral
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <img src="./1.webp" style="width:100%; height:250px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="">
+                Ketika masyarakat menganggap menjaga alam sebagai bagian dari ibadah, perhatian terhadap eksploitasi SDA tidak lagi hanya soal ekonomi dan politik. Kesadaran ini membuat setiap orang merasa memiliki kewajiban moral untuk merawat lingkungan demi kebaikan bersama.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false">
+                Menolak Kerusakan dan Mendukung Keberlanjutan
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <img src="./dukung.jpeg" style="width:100%; height:250px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="">
+                Umat beragama diajak untuk menolak segala bentuk praktik yang merusak alam, termasuk eksploitasi berlebihan. Mereka juga didorong mendukung keputusan, kebijakan, dan tindakan yang berpihak pada keberlanjutan agar generasi mendatang tetap dapat menikmati sumber daya alam.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false">
+                Menjadi Suara Bagi Keadilan Ekologis
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <img src="./voice.webp" style="width:100%; height:250px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="">
+                Masyarakat berperan penting sebagai pengingat dan penyampai aspirasi agar lingkungan tetap terlindungi. Dengan menjadi suara bagi keadilan ekologis, nilai agama dan kesadaran lingkungan dapat berjalan seiring untuk menghentikan laju eksploitasi SDA di Indonesia.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Amanah section -->
+     <section class="py-5">
+  <h2 class="text-center fw-bold" style="color: green;">
+    Menjadikan Bumi sebagai Amanah Bersama</h2>
+        <p class="text-center readable-text mb-4">
+          Melalui penguatan sikap kritis dan pemahaman agama, masyarakat dapat lebih bijak dalam menilai informasi yang mendorong eksploitasi SDA dan lebih memilih jalan hidup yang berkelanjutan. Keselamatan bumi adalah tanggung jawab bersama, dan setiap individu memiliki peran untuk memastikan bahwa alam tidak terus menerus menjadi korban ambisi manusia. Dengan memahami amanah ini, kita dapat bergerak menuju masa depan yang lebih adil bagi manusia dan lebih sehat bagi bumi.
+        </p>
+      </section>
+
+    </div> <!-- /.container -->
+  </main>
+
+  <!-- FOOTER (fixed good structure) -->
+  <footer class="site-footer">
+    <div class="container text-center">
+      <p class="mb-2">© 2025 Kelompok 6. All Rights Reserved.</p>
+      <div class="social-icons">
+        <a href="#" aria-label="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="twitter"><i class="bi bi-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Keep small UX behavior (nav shadow on scroll + theme toggle stub)
+    const nav = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 20) nav.style.boxShadow = '0 10px 28px rgba(2,6,23,0.12)';
+      else nav.style.boxShadow = '0 6px 20px rgba(2,6,23,0.12)';
+    });
+
+    // allow flip-cards to be toggled on click (if present elsewhere)
+    document.querySelectorAll('.flip-card').forEach(card => {
+      card.addEventListener('click', () => card.classList.toggle('active'));
+    });
+
+    // theme toggle: basic (does not change text)
+    const themeToggle = document.getElementById('themeToggle');
+    if(themeToggle){
+      themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark-mode');
+      });
+    }
+  </script>
+</body>
+</html>
